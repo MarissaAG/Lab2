@@ -8,23 +8,29 @@ public class Shooting : MonoBehaviour
     public Transform firePosition;
     public float bulletSpeed;
 
+    private Inventory inventory;
 
 
-
+    // Start is called before the first frame update
     void Awake()
     {
-     
+        inventory = GetComponent<Inventory>();
     }
-
 
     // Update is called once per frame
     void Update()
     {
-        Shoot();  
+        Shoot();
     }
+
 
     void Shoot()
     {
-       
+        if (Input.GetButtonDown("Fire1") && inventory.myStuff.bullets > 0)
+        {
+            Rigidbody bulletInstance = Instantiate(bulletPrefab, firePosition.position, firePosition.rotation) as Rigidbody;
+            bulletInstance.AddForce(firePosition.forward * bulletSpeed);
+            inventory.myStuff.bullets--;
+        }
     }
 }
